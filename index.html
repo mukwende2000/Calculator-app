@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Calculator</title>
+    <style>
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            color: #fff;
+        }
+        .themes {
+            display: flex;
+            align-items: flex-end;
+        }
+        .switch {
+            width: 50px;
+            height: 20px;
+            border-radius: 10px;
+            background-color: hsl(223, 31%, 20%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 6px;
+            margin-left: 5px;
+        }
+        .theme1,
+        .theme2,
+        .theme3 {
+            width: 12px;
+            height: 12px;
+            background-color: hsl(6, 63%, 50%);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .theme2 {
+           background-color:  hsl(25, 98%, 40%);
+           opacity: 0;
+        }
+        .theme3 {
+            background-color: hsl(176, 100%, 44%);
+            opacity: 0;
+        }
+        .themes p {
+            letter-spacing: 5px;
+            margin-bottom: 0px;
+            margin-left: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    
+     <div class="container">
+        <div class="header">
+            <p>Calc</p>
+            <div class="themes">
+                <div style="font-size: .7rem;">THEME</div>
+                <div class="switcher">
+                    <p>1 2 3</p>
+                    <div class="switch">
+                        <div class="theme1"></div>
+                        <div class="theme2"></div>
+                        <div class="theme3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="screens">
+            <div class="input-screen"></div>
+            <div class="output-screen"></div>
+        </div>
+        
+        <div class="btns"> 
+                    <div class="num">7</div>
+                    <div class="num">8</div>
+                    <div class="num">9</div>
+                    <div id="deleteBtn">DEL</div>
+                    <div class="num">4</div>
+                    <div class="num">5</div>
+                    <div class="num">6</div>
+                    <div class="operator">+</div>
+                    <div class="num">3</div>
+                    <div class="num">2</div>
+                    <div class="num">1</div>
+                    <div class="operator" id="minusOperator">-</div>
+                    <div class="num">.</div>
+                    <div class="num">0</div>
+                    <div class="operator">/</div>
+                    <div class="operator times">*</div>
+                    <div id="clearBtn">Reset</div>
+                    <div id="equalBtn">=</div>  
+                </div>
+     </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
