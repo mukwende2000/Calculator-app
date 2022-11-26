@@ -19,72 +19,103 @@ const header = document.querySelector('.header');
 nums.forEach((num) => {
     num.addEventListener('click', input)
     function input(e) {
+        if(e.target.textContent === '.' && inputScreen.textContent.includes('.')) return
         inputScreen.textContent += e.target.textContent;
-        if(inputScreen.textContent.includes('*') || inputScreen.textContent.includes('-')
-        || inputScreen.textContent.includes('/') || inputScreen.textContent.includes('+')) {
+        if (inputScreen.textContent.includes('+')) {
 
+            const a = inputScreen.textContent.slice(0, inputScreen.textContent.indexOf('+'))
+            const b = inputScreen.textContent.slice(inputScreen.textContent.indexOf('+') + 1)
+            outputScreen.textContent = parseInt(a) + parseInt(b)
             
-            outputScreen.innerText = eval(inputScreen.innerText);
-        } else {
-            outputScreen.textContent = '';
+        } else if (inputScreen.textContent.includes('-')) {
+                    if(countChar(inputScreen.textContent, '-') === 2) {
+                        const a = inputScreen.textContent.slice(0, inputScreen.textContent.lastIndexOf('-'))
+                        const b = inputScreen.textContent.slice(inputScreen.textContent.lastIndexOf('-') + 1)
+                        outputScreen.textContent = parseInt(a) - parseInt(b)
+                    }
+                    if(countChar(inputScreen.textContent, '-') === 1 && inputScreen.textContent.charAt(0) != '-') {
+                        const a = inputScreen.textContent.slice(0, inputScreen.textContent.indexOf('-'))
+                        const b = inputScreen.textContent.slice(inputScreen.textContent.indexOf('-') + 1)
+                        outputScreen.textContent = parseInt(a) - parseInt(b)
+                    }
+
+        } else if (inputScreen.textContent.includes('X')) {
+
+            const a = inputScreen.textContent.slice(0, inputScreen.textContent.indexOf('X'))
+            const b = inputScreen.textContent.slice(inputScreen.textContent.indexOf('X') + 1)
+            outputScreen.textContent = parseInt(a) * parseInt(b)
+            
+        } else if(inputScreen.textContent.includes('/')) {
+            
+            const a = inputScreen.textContent.slice(0, inputScreen.textContent.indexOf('/'))
+            const b = inputScreen.textContent.slice(inputScreen.textContent.indexOf('/') + 1)
+            outputScreen.textContent = parseInt(a) / parseInt(b)
+            
         }
        }
 })
 
+// HELPER FUNCTION
+function countChar(string, char) {
+    let stringOccurence = 0
+    for (let i = 0; i < string.length; i++) {
+        if(string[i] === char) {
+            stringOccurence++
+        }
+    }
+    return stringOccurence
+}
+
 operators.forEach((operator) => {
     operator.addEventListener('click', input)
     function input() {
-    if (inputScreen.innerText[inputScreen.innerText.length-1] === '+' ||
-        inputScreen.innerText[inputScreen.innerText.length-1] === '-' ||
-        inputScreen.innerText[inputScreen.innerText.length-1] === '*' ||
-        inputScreen.innerText[inputScreen.innerText.length-1] === '/') {
+    if (inputScreen.textContent[inputScreen.textContent.length-1] === '+' ||
+        inputScreen.textContent[inputScreen.textContent.length-1] === '-' ||
+        inputScreen.textContent[inputScreen.textContent.length-1] === '*' ||
+        inputScreen.textContent[inputScreen.textContent.length-1] === '/') {
 
-           inputScreen.innerText = inputScreen.innerText
+           inputScreen.textContent = inputScreen.textContent
 
-    } else if (inputScreen.innerText === '') {
-        inputScreen.innerText = minusOperator.innerText
+    } else if (inputScreen.textContent === '') {
+        return
+    } else if(outputScreen.textContent) {
+        inputScreen.textContent = outputScreen.textContent
+        inputScreen.textContent += operator.textContent
+        outputScreen.textContent = ''
     } else {
-        inputScreen.innerText += operator.innerText      
+        inputScreen.textContent += operator.textContent      
     }
-    }
+}
 })
 
 minusOperator.addEventListener('click', inputForMinus)
     
 function inputForMinus() {
-    if (inputScreen.innerText[inputScreen.innerText.length-1] === '+' ||
-        inputScreen.innerText[inputScreen.innerText.length-1] === '-' ||
-        inputScreen.innerText[inputScreen.innerText.length-1] === '*' ||
-        inputScreen.innerText[inputScreen.innerText.length-1] === '/') {
+    if (inputScreen.textContent[inputScreen.textContent.length-1] === '+' ||
+        inputScreen.textContent[inputScreen.textContent.length-1] === '-' ||
+        inputScreen.textContent[inputScreen.textContent.length-1] === '*' ||
+        inputScreen.textContent[inputScreen.textContent.length-1] === '/') {
 
-           inputScreen.innerText = inputScreen.innerText
+           inputScreen.textContent = inputScreen.textContent
 
         } else {
-        screen.innerText += minusOperator.innerText      
+        inputScreen.textContent += minusOperator.textContent      
     }
 }
+
 clearBtn.addEventListener('click', () => {
-    inputScreen.innerText = ''
+    inputScreen.textContent = ''
+    outputScreen.textContent = ''
 })
 
 delBtn.addEventListener('click', () => {
-    inputScreen.innerText = inputScreen.innerText.slice(0, -1);
-    if(inputScreen.textContent.includes('*') || inputScreen.textContent.includes('-')
-    || inputScreen.textContent.includes('/') || inputScreen.textContent.includes('+')) {
-
-        outputScreen.innerText = eval(inputScreen.innerText);
-    } else {
-        outputScreen.textContent = '';
-    }
-
+    inputScreen.textContent = inputScreen.textContent.slice(0, -1);
+    outputScreen.textContent = ''
 })
 equalBtn.addEventListener('click', () => {
-    if (inputScreen.innerText == '') {
-        inputScreen.innerText = ''
-    } else {
-        inputScreen.innerText = outputScreen.textContent;
+    if (!inputScreen.textContent || !outputScreen.textContent) return
+        inputScreen.textContent = outputScreen.textContent;
         outputScreen.textContent = '';
-    }
 })
 
 //THEME SWITCHER
@@ -93,7 +124,6 @@ theme2.addEventListener ('click', toggleTheme2)
 theme3.addEventListener ('click', toggleTheme3)
 
 function toggleTheme1(e) {
-    console.log(e.target)
     theme1.style.opacity = '1'
     theme2.style.opacity = '0'
     theme3.style.opacity = '0'
@@ -123,7 +153,6 @@ function toggleTheme1(e) {
 
 }
 function toggleTheme2(e) {
-    console.log(e.target)
     theme1.style.opacity = '0'
     theme2.style.opacity = '1'
     theme3.style.opacity = '0'
@@ -152,7 +181,6 @@ function toggleTheme2(e) {
     header.style.color = 'black'
 }
 function toggleTheme3(e) {
-    console.log(e.target)
     theme1.style.opacity = '0'
     theme2.style.opacity = '0'
     theme3.style.opacity = '1'
@@ -177,5 +205,4 @@ function toggleTheme3(e) {
     equalBtn.style.boxShadow = '0 2px 1px 1px hsl(177, 92%, 70%)'
     equalBtn.style.color = 'hsl(198, 20%, 13%)'
     header.style.color = 'hsl(52, 100%, 62%)'
-
 }
