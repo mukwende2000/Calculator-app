@@ -204,5 +204,5 @@ function toggleTheme3(e) {
     equalBtn.style.backgroundColor = 'hsl(176, 100%, 44%)'
     equalBtn.style.boxShadow = '0 2px 1px 1px hsl(177, 92%, 70%)'
     equalBtn.style.color = 'hsl(198, 20%, 13%)'
-    header.style.color = 'hsl(52, 100%, 62%)'
+    header.style.color = 'hsl(52, 100%, 63%)'
 }
